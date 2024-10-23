@@ -1,0 +1,63 @@
+openapi: 3.0.3
+info:
+  title: Time waste API
+  description: Returns actions that you can possibly do, but did not
+  version: 1.0.0
+servers:
+  - url: 'https://192.168.x.x/v1'
+    description: Local Server Raspberry Pi 5 [Batya]
+  - url: 'http://192.168.x.x/v1'
+    description: Local Server Raspberry Pi 5 [Pizduc]
+paths:
+  /activity/{milliseconds}:
+    get:
+      summary: Получение случайной активности, которую можно успеть сделать за присланное время
+      parameters:
+        - name: milliseconds
+          in: path
+          required: true
+          description: Присланное время в миллисекундах
+          schema:
+            type: integer
+        - name: sex
+          in: cookie
+          required: false
+          description: Пол клиента чтобы понимать как склонять слова в ответе
+      responses:
+        200:
+          description: One activity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Activity'
+        400:
+          description: Invalid time
+        404:
+          description: Activity not found
+        default:
+          description: Unexpected error
+  /activities/{milliseconds}:
+    get:
+      summary: Получение всех активностей, которые можно было бы сделать за присланное время
+      parameters:
+        - name: milliseconds
+          in: path
+          required: true
+          description: Потраченное время в миллисекундах
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Коллекция активностей (Successful operation)
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Activity'
+        400:
+          description: Invalid time
+        default:
+          description: Unexpected error
+
+  
