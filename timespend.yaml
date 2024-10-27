@@ -20,9 +20,12 @@ paths:
           schema:
             type: integer
         - name: sex
-          in: cookie
+          in: query
           required: false
           description: Пол клиента чтобы понимать как склонять слова в ответе
+          schema:
+            type: string
+            enum: [male, female]
       responses:
         200:
           description: One activity
@@ -60,4 +63,25 @@ paths:
         default:
           description: Unexpected error
 
-  
+components:
+  schemas:
+    Activity:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The unique id
+        name:
+          type: string
+          description: The name of the activity
+        description:
+          type: string
+          description: Description
+        duration:
+          type: integer
+          description: The duration
+      required:
+        - id
+        - name
+        - description
+
