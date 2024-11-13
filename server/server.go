@@ -1,16 +1,18 @@
 package server
 
 import (
-  "net/http"
-  "github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin"
+	"net/http"
 )
 
-func Start() {
-  r := gin.Default()
-  r.Get("/activity", func(c *gin.Context) {
-    c.JSON(http.StatusOk, gin.H{
-	message: "pong"
-    })
-  })
-  r.Run()
+type Server struct{}
+
+func NewServer() *Server {
+	return &Server{}
+}
+
+func (s *Server) Start() error {
+	r := gin.Default()
+	r.StaticFS("/", http.Dir("client"))
+	return r.Run(":5555")
 }

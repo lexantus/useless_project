@@ -1,0 +1,31 @@
+.coverCoverCover_coverCover {
+    background-repeat: no-repeat, no-repeat;
+    background-image: url("eyes.png"), url("coverCover.png");
+    background-size: contain, contain;
+    width: 50%;
+}
+
+.content {
+    display: flex;
+    height: 70vh;
+}
+
+.ican_but_ididnt {
+    overflow: auto;
+}
+
+.topBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 10vh;
+    max-width: 1440px;
+}
+
+.sex {
+    font-size: 40px;
+}
+
+.sex>span {
+    cursor: pointer;
+}
