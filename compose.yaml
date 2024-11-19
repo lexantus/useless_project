@@ -1,0 +1,10 @@
+services:
+  web:
+    build: .
+    ports:
+      - "5555:5555"
+  db:
+    image: "alpine/sqlite"
+    volumes:
+     - ./db/activity.db:/data/activity.db  # Map local path to container path
+    command: "sqlite3 /data/activity.db"

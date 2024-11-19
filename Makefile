@@ -1,3 +1,2 @@
 server:
-	go clean
-	go run .
+	go run server/server.go
