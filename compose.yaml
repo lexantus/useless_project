@@ -4,7 +4,9 @@ services:
     ports:
       - "5555:5555"
   db:
-    image: "alpine/sqlite"
-    volumes:
-     - ./db/activity.db:/data/activity.db  # Map local path to container path
-    command: "sqlite3 /data/activity.db"
+    image: "postgres:17.2-alpine3.20"
+    restart: "always"
+    environment:
+      - POSTGRES_PASSWORD=password
+    ports:
+      - "5431:5432"
