@@ -26,7 +26,6 @@ func NewServer() (*Server, error) {
 	if err != nil {
 		return nil, err
 	}
-	// Ensure the database is reachable
 	if err := db.Ping(); err != nil {
 		db.Close()
 		return nil, err
@@ -39,26 +38,22 @@ func (s *Server) activityHandler(c *gin.Context) {
 	r := s.db.QueryRow("SELECT id, timespan_ms, description from activity WHERE timespan_ms = $1", milliseconds)
 	var activity Activity
 	err := r.Scan(&activity.ID, &activity.TimespanMs, &activity.Desc)
-	// Check for errors in scanning
 	if err != nil {
-		// If the error is not nil, check if it's a "no rows found" error
 		if errors.Is(err, sql.ErrNoRows) {
-			// Return a 404 if no rows are found for the given milliseconds
 			c.JSON(http.StatusNotFound, gin.H{"error": "Activity not found"})
 		} else {
-			// Return a 500 for any other errors
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Database error", "details": err.Error()})
 		}
 		return
 	}
-	// c.JSON(http.StatusOK, gin.H{"message": "pong"})
 	c.JSON(http.StatusOK, activity)
 }
 
 func (s *Server) Start() error {
 	router := gin.Default()
-	// router.Static("/", http.Dir("assets"))
 	router.GET("/activity/:milliseconds", s.activityHandler)
+	router.StaticFS("/assets", http.Dir("assets"))
+	router.StaticFile("/index.html", "./assets/index.html")
 	return router.Run(":5555")
 }
 
