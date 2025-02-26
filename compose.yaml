@@ -1,6 +1,7 @@
 services:
   web:
-    build: .
+    build:
+      dockerfile: ./build/Dockerfile
     ports:
       - "5555:5555"
   db:

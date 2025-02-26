@@ -6,10 +6,13 @@ WORKDIR /usr/src/app
 COPY go.mod go.sum ./
 RUN go mod download && go mod verify
 
-COPY ./assets ./assets
-COPY ./server ./server
-RUN go build -v -o /usr/local/bin/app ./...
+COPY ./web ./web
+COPY ./cmd ./cmd
+COPY ./configs ./configs
+COPY ./internal ./internal
+COPY ./config.yaml ./config.yaml
+
 
 ENV GIN_MODE=release
 
-CMD ["go", "run", "server/server.go"]
+CMD ["go", "run", "cmd/timespend-server/main.go"]
