@@ -1,0 +1,7 @@
+db:
+  port: 5432
+  user: postgres
+  password: password
+  dbname: timespan
+  sslmode: disable
+  url: "postgres://postgres:password@db:5432/timespan?sslmode=disable"
